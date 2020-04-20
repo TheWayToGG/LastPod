@@ -118,6 +118,40 @@ Light:
     type: 3}
   m_PrefabInstance: {fileID: 9196110157071989512}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &926661505 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2521113020560496765, guid: 64e60e54e835a1c41aa5ceaff4bbc445,
+    type: 3}
+  m_PrefabInstance: {fileID: 1075938247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &926661506
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926661505}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &926661508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926661505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aabe4f2143f4ec4199fbdbc45ddb1c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1075938247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130,6 +164,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Emergency Pod
       objectReference: {fileID: 0}
+    - target: {fileID: 3972990957353102406, guid: 64e60e54e835a1c41aa5ceaff4bbc445,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7968276252564941273, guid: 64e60e54e835a1c41aa5ceaff4bbc445,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -138,7 +177,7 @@ PrefabInstance:
     - target: {fileID: 7968276252564941273, guid: 64e60e54e835a1c41aa5ceaff4bbc445,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.259125
+      value: 2.214
       objectReference: {fileID: 0}
     - target: {fileID: 7968276252564941273, guid: 64e60e54e835a1c41aa5ceaff4bbc445,
         type: 3}
@@ -184,6 +223,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9167271156656996756, guid: 64e60e54e835a1c41aa5ceaff4bbc445,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64e60e54e835a1c41aa5ceaff4bbc445, type: 3}
@@ -237,7 +281,7 @@ PrefabInstance:
     - target: {fileID: 6274033602693036299, guid: ed6f68b6884540d4d9ccf349aade2afe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6274033602693036299, guid: ed6f68b6884540d4d9ccf349aade2afe,
         type: 3}
