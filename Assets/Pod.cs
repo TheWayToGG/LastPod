@@ -18,10 +18,11 @@ public class Pod : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
+        Thrust();
+        Rotate();
     }
 
-    private void ProcessInput()
+    private void Thrust()
     {
         if (Input.GetKey(KeyCode.Space))
         {
@@ -36,18 +37,24 @@ public class Pod : MonoBehaviour
         {
             audioSource.Stop();
         }
+    }
+
+    private void Rotate()
+    {
+
+        rigidbody.freezeRotation = true;
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            //rigidbody.AddRelativeTorque(0, 0, 0.1f);
             transform.Rotate(Vector3.forward);
             print("Rotating left!");
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            //rigidbody.AddRelativeTorque(0, 0, -0.1f);
             transform.Rotate(Vector3.back);
             print("Rotating right!");
         }
+
+        rigidbody.freezeRotation = false;
     }
 }
