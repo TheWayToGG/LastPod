@@ -8,6 +8,9 @@ public class Pod : MonoBehaviour
     Rigidbody rigidbody;
     AudioSource audioSource;
 
+    [SerializeField] float rcsThrust = 100f;
+    [SerializeField] float mainThrust = 150f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +29,8 @@ public class Pod : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            print("Accelerating!");
-            rigidbody.AddRelativeForce(Vector3.up);
+            float mainThrustThisFrame = mainThrust * Time.deltaTime;
+            rigidbody.AddRelativeForce(Vector3.up * mainThrustThisFrame);
             if (!audioSource.isPlaying)
             {
                 audioSource.Play();
@@ -44,15 +47,15 @@ public class Pod : MonoBehaviour
 
         rigidbody.freezeRotation = true;
 
+        float rotationThisFrame = rcsThrust * Time.deltaTime;
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Rotate(Vector3.forward);
-            print("Rotating left!");
+            transform.Rotate(Vector3.forward * rotationThisFrame);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Rotate(Vector3.back);
-            print("Rotating right!");
+            transform.Rotate(Vector3.back * rotationThisFrame);
         }
 
         rigidbody.freezeRotation = false;
