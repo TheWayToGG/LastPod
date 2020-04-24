@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Pod : MonoBehaviour
 {
-
-    Rigidbody rigidbody;
+    new Rigidbody rigidbody;
     AudioSource audioSource;
 
     [SerializeField] float rcsThrust = 100f;
@@ -59,5 +58,18 @@ public class Pod : MonoBehaviour
         }
 
         rigidbody.freezeRotation = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        switch (collision.gameObject.tag)
+        {
+            case "Friendly":
+                break;
+            default:
+                print("Dead!");
+                break;
+        }
     }
 }
