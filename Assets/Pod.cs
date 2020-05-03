@@ -11,6 +11,9 @@ public class Pod : MonoBehaviour
 
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 150f;
+    [SerializeField] AudioClip mainEngineSound;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip levelCompleteSound;
 
     // Start is called before the first frame update
     void Start()
@@ -25,21 +28,16 @@ public class Pod : MonoBehaviour
         // todo stop sound on death
         if (state == State.Alive)
         {
-            Thrust();
-            Rotate();
+            RespondToThrustInput();
+            RespondToRotateInput();
         }
     }
 
-    private void Thrust()
+    private void RespondToThrustInput()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            float mainThrustThisFrame = mainThrust * Time.deltaTime;
-            rigidbody.AddRelativeForce(Vector3.up * mainThrustThisFrame);
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
+            ApplyThrust();
         }
         else
         {
@@ -47,7 +45,17 @@ public class Pod : MonoBehaviour
         }
     }
 
-    private void Rotate()
+    private void ApplyThrust()
+    {
+        float mainThrustThisFrame = mainThrust * Time.deltaTime;
+        rigidbody.AddRelativeForce(Vector3.up * mainThrustThisFrame);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(mainEngineSound);
+        }
+    }
+
+    private void RespondToRotateInput()
     {
 
         rigidbody.freezeRotation = true;
@@ -67,7 +75,7 @@ public class Pod : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
+    { 
         if (state != State.Alive)
         {
             return;
@@ -78,14 +86,32 @@ public class Pod : MonoBehaviour
             case "Friendly":
                 break;
             case "Finish":
-                state = State.Transcending;
-                Invoke("LoadNextLevel", 1f);
+                StartLevelFinishedSequence();
                 break;
             default:
-                state = State.Dying;
-                Invoke("LoadFirstLevel", 1f);
+                StartDeathSequence();
                 break;
         }
+    }
+
+    private void StartLevelFinishedSequence()
+    {
+        state = State.Transcending;
+        SwitchSound(levelCompleteSound);
+        Invoke("LoadNextLevel", 1f);
+    }
+
+    private void StartDeathSequence()
+    {
+        state = State.Dying;
+        SwitchSound(deathSound);
+        Invoke("LoadFirstLevel", 1f);
+    }
+
+    private void SwitchSound(AudioClip audioClip)
+    {
+        audioSource.Stop();
+        audioSource.PlayOneShot(audioClip);
     }
 
     private void LoadFirstLevel()
