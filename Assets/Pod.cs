@@ -11,9 +11,14 @@ public class Pod : MonoBehaviour
 
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 150f;
+
     [SerializeField] AudioClip mainEngineSound;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip levelCompleteSound;
+
+    [SerializeField] ParticleSystem mainEngineParticle;
+    [SerializeField] ParticleSystem deathParticle;
+    [SerializeField] ParticleSystem levelCompleteParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +30,6 @@ public class Pod : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // todo stop sound on death
         if (state == State.Alive)
         {
             RespondToThrustInput();
@@ -42,6 +46,7 @@ public class Pod : MonoBehaviour
         else
         {
             audioSource.Stop();
+            mainEngineParticle.Stop();
         }
     }
 
@@ -53,6 +58,7 @@ public class Pod : MonoBehaviour
         {
             audioSource.PlayOneShot(mainEngineSound);
         }
+        mainEngineParticle.Play();
     }
 
     private void RespondToRotateInput()
@@ -98,6 +104,7 @@ public class Pod : MonoBehaviour
     {
         state = State.Transcending;
         SwitchSound(levelCompleteSound);
+        levelCompleteParticle.Play();
         Invoke("LoadNextLevel", 1f);
     }
 
@@ -105,6 +112,7 @@ public class Pod : MonoBehaviour
     {
         state = State.Dying;
         SwitchSound(deathSound);
+        deathParticle.Play();
         Invoke("LoadFirstLevel", 1f);
     }
 
