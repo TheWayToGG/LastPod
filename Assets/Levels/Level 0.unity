@@ -368,7 +368,7 @@ PrefabInstance:
     - target: {fileID: 5059070590813244103, guid: c64c81debd1d46a4c956d2ce2ee91f90,
         type: 3}
       propertyPath: m_Name
-      value: Obstacle (8)
+      value: Moving Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 7990009594650032864, guid: c64c81debd1d46a4c956d2ce2ee91f90,
         type: 3}
@@ -401,8 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a203b6ada4a460742a61dc77e2f3c09c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementVector: {x: 0, y: 0, z: 0}
-  movementFactor: 0
+  movementVector: {x: 10, y: 0, z: 0}
+  period: 2
 --- !u!1 &391517452
 GameObject:
   m_ObjectHideFlags: 0

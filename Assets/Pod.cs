@@ -11,6 +11,7 @@ public class Pod : MonoBehaviour
 
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 150f;
+    [SerializeField] float levelLoadDelay = 1f;
 
     [SerializeField] AudioClip mainEngineSound;
     [SerializeField] AudioClip deathSound;
@@ -105,7 +106,7 @@ public class Pod : MonoBehaviour
         state = State.Transcending;
         SwitchSound(levelCompleteSound);
         levelCompleteParticle.Play();
-        Invoke("LoadNextLevel", 1f);
+        Invoke("LoadNextLevel", levelLoadDelay);
     }
 
     private void StartDeathSequence()
@@ -113,7 +114,7 @@ public class Pod : MonoBehaviour
         state = State.Dying;
         SwitchSound(deathSound);
         deathParticle.Play();
-        Invoke("LoadFirstLevel", 1f);
+        Invoke("LoadFirstLevel", levelLoadDelay);
     }
 
     private void SwitchSound(AudioClip audioClip)

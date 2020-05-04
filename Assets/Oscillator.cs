@@ -6,26 +6,37 @@ using UnityEngine;
 public class Oscillator : MonoBehaviour
 {
 
-    [SerializeField] Vector3 movementVector;
+    [SerializeField] Vector3 movementVector = new Vector3(10f, 0f);
+    [SerializeField] float period = 2f;
 
-    // todo remove from inspector
-    [Range(0, 1)]
-    [SerializeField]
-    float movementFactor; // 0 for full stop, 1 for max speed
+    float movementFactor; // 0 for not moved, 1 for fully moved.
+    Vector3 startingPos;
+    Vector3 offset;
+    float cycles;
+    float rawSinWave;
 
-    Vector3 startingPosition;
-    Vector3 offSet;
+    const float tau = Mathf.PI * 2f; // about 6.28
 
-    // Start is called before the first frame update
+    // Use this for initialization
     void Start()
     {
-        startingPosition = transform.position;
+        startingPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        offSet = movementVector * movementFactor;
-        transform.position = startingPosition + offSet;
+        if (period <= Mathf.Epsilon)
+        {
+            return;
+        }
+        
+        cycles = Time.time / period;
+        
+        rawSinWave = Mathf.Sin(cycles * tau); // goes from -1 to +1
+
+        movementFactor = rawSinWave / 2f + 0.5f;
+        offset = movementFactor * movementVector;
+        transform.position = startingPos + offset;
     }
 }
