@@ -21,6 +21,8 @@ public class Pod : MonoBehaviour
     [SerializeField] ParticleSystem deathParticle;
     [SerializeField] ParticleSystem levelCompleteParticle;
 
+    bool collisionsOff = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,10 @@ public class Pod : MonoBehaviour
         {
             RespondToThrustInput();
             RespondToRotateInput();
+        }
+        if (Debug.isDebugBuild)
+        {
+            RespondToDebugKeys();
         }
     }
 
@@ -62,6 +68,18 @@ public class Pod : MonoBehaviour
         mainEngineParticle.Play();
     }
 
+    private void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisionsOff = !collisionsOff;
+        }
+    }
+
     private void RespondToRotateInput()
     {
 
@@ -83,7 +101,7 @@ public class Pod : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     { 
-        if (state != State.Alive)
+        if (state != State.Alive || collisionsOff)
         {
             return;
         }
@@ -130,6 +148,12 @@ public class Pod : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        SceneManager.LoadScene(1); // todo allow more levels
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextSceneIndex = 0;
+        }
+        SceneManager.LoadScene(nextSceneIndex);
     }
 }
