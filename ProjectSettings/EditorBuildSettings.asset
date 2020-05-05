@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Levels/Level 4.unity
     guid: a314428bf6356264fb89bafd640300a2
+  - enabled: 1
+    path: Assets/Levels/Victory Screen.unity
+    guid: 9b59f3aae09d91945ab943bd14f01694
   m_configObjects: {}
