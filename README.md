@@ -6,4 +6,8 @@ Game is a simple simulation of a emergency pod pilot who needs to go acress the 
 Arrow keys - Rotation
 Spacebar - Thrust
 
+Game is uploded to SIMMER.io, where you can play it - https://simmer.io/@TheWay/lastpod
+
+Enjoy!
+
 Multiple new functions are planned, keep an eye on the project!
