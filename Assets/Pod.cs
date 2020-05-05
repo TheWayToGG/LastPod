@@ -6,9 +6,6 @@ public class Pod : MonoBehaviour
     new Rigidbody rigidbody;
     AudioSource audioSource;
 
-    enum State { Alive, Dying, Transcending }
-    State state = State.Alive;
-
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 150f;
     [SerializeField] float levelLoadDelay = 1f;
@@ -22,6 +19,7 @@ public class Pod : MonoBehaviour
     [SerializeField] ParticleSystem levelCompleteParticle;
 
     bool collisionsOff = false;
+    bool isTransitioning = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +31,7 @@ public class Pod : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (state == State.Alive)
+        if (!isTransitioning)
         {
             RespondToThrustInput();
             RespondToRotateInput();
@@ -52,9 +50,14 @@ public class Pod : MonoBehaviour
         }
         else
         {
-            audioSource.Stop();
-            mainEngineParticle.Stop();
+            StopApplyingThrust();
         }
+    }
+
+    private void StopApplyingThrust()
+    {
+        audioSource.Stop();
+        mainEngineParticle.Stop();
     }
 
     private void ApplyThrust()
@@ -83,7 +86,7 @@ public class Pod : MonoBehaviour
     private void RespondToRotateInput()
     {
 
-        rigidbody.freezeRotation = true;
+        rigidbody.angularVelocity = Vector3.zero;
 
         float rotationThisFrame = rcsThrust * Time.deltaTime;
 
@@ -95,13 +98,11 @@ public class Pod : MonoBehaviour
         {
             transform.Rotate(Vector3.back * rotationThisFrame);
         }
-
-        rigidbody.freezeRotation = false;
     }
 
     private void OnCollisionEnter(Collision collision)
     { 
-        if (state != State.Alive || collisionsOff)
+        if (isTransitioning || collisionsOff)
         {
             return;
         }
@@ -121,7 +122,7 @@ public class Pod : MonoBehaviour
 
     private void StartLevelFinishedSequence()
     {
-        state = State.Transcending;
+        isTransitioning = true;
         SwitchSound(levelCompleteSound);
         levelCompleteParticle.Play();
         Invoke("LoadNextLevel", levelLoadDelay);
@@ -129,7 +130,7 @@ public class Pod : MonoBehaviour
 
     private void StartDeathSequence()
     {
-        state = State.Dying;
+        isTransitioning = true;
         SwitchSound(deathSound);
         deathParticle.Play();
         Invoke("LoadFirstLevel", levelLoadDelay);
